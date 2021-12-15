@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("WordE")>
+<Assembly: AssemblyTitle("Word")>
 <Assembly: AssemblyDescription("MS Word COM objects emulator")>
 <Assembly: AssemblyCompany("VISUS Health IT GmbH")>
-<Assembly: AssemblyProduct("WordE")>
+<Assembly: AssemblyProduct("Word")>
 <Assembly: AssemblyCopyright("Copyright © VISUS Health IT GmbH 2021")>
 <Assembly: AssemblyTrademark("")>
 
