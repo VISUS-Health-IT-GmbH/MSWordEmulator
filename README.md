@@ -29,8 +29,8 @@ The following script should work:
 Invoke-WebRequest "https://aka.ms/vs/17/vs_buildtools.exe" -OutFile "vs_buildtools.exe"
 .\vs_buildtools.exe --quiet --add Microsoft.Components.MSBuild --add Microsoft.Net.Component.4.7.2.TargetingPack
 
-git clone "https://github.com/VISUS-Health-IT-GmbH/MSWordEmulator.git" Word
-$path = "$(Get-Location)/Word/Word/Word/Word.vbproj"
+git clone "https://github.com/VISUS-Health-IT-GmbH/MSWordEmulator.git" mswordemu
+$path = "$(Get-Location)/mswordemu/Word/Word.vbproj"
 
 cd "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin"
 .\MSBuild.exe $path

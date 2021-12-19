@@ -33,15 +33,55 @@ Public Class Document
     ' Emulation of "word.documents.open" function
     Public Function open(ByVal input As String) As Document
         Console.WriteLine("Emulated 'word.documents.open' function!")
+
+        ' Check input for correctness
+        If input Is Nothing Then
+            ' 1) input NULL return NULL
+            Return Nothing
+        ElseIf Directory.Exists(input) Then
+            ' 2) input directory throw COMException
+            Throw New COMException
+        ElseIf Not File.Exists(input) Then
+            ' 3) input not a file throw COMException
+            Throw New COMException
+        End If
+
+        ' Check if file is DOC / DOCX file by magic number
+        ' DOC:  D0 CF 11 E0 A1 B1 1A E1
+        ' DOCX: 50 4B 03 04  /  50 4B 05 06  /  50 4B 07 08
+        Dim buffer() As Byte = New Byte(8) {}
+        Using fs As New FileStream(input, FileMode.Open, FileAccess.Read, FileShare.None)
+            fs.Read(buffer, 0, buffer.Length)
+        End Using
+
         Dim docObj As New Document()
         Return docObj
     End Function
 
+
     ' Emulation of "word.documents.saveas" subroutine
-    ' TODO: Also emulate COMExceptions thrown by actual subroutine!
+    ' TODO: Check if output is a PDF file and overwrite if true!
     Public Sub saveas(ByVal output As String, ByVal type As Integer)
         Console.WriteLine("Emulated 'word.documents.saveas' subroutine!")
+
+        ' Check input for correctness
+        If output Is Nothing Then
+            ' 1) input NULL throw COMException
+            Throw New COMException
+        ElseIf Directory.Exists(output) Then
+            ' 2) input directory throw COMException
+            Throw New COMException
+        ElseIf File.Exists(output) Then
+            ' 3) input an existing file throw COMException
+            Throw New COMException
+        End If
+
+        ' Create pseude PDF file with magic number
+        ' PDF:  25 50 44 46 2D
+        Dim buffer() As Byte = New Byte() {&H25, &H50, &H44, &H46, &H2D}
+        File.WriteAllBytes(output, buffer)
     End Sub
+
 
     ' Emulation of "word.documents.close" subroutine
     Public Sub close()
