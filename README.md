@@ -22,20 +22,32 @@ which can be used to convert a given DOC / DOCX file to PDF using a few function
 ## Installation
 
 There is only one way to install this driver yet! It must be installed using *MSBuild* provided by
-Microsoft standalone without Visual Studio Community 2022.
+Microsoft standalone.
 
 The following script should work:
 ```powershell
 #Requires -RunAsAdministrator
 
-Invoke-WebRequest "https://aka.ms/vs/17/vs_buildtools.exe" -OutFile "vs_buildtools.exe"
-.\vs_buildtools.exe --quiet --add Microsoft.Components.MSBuild --add Microsoft.Net.Component.4.7.2.TargetingPack
+<# download vs_buildtools.exe and install MSBuild / .NET 4.8 #>
+$client = [System.Net.WebClient]::New()
+$client.DownloadFile("https://aka.ms/vs/17/release/vs_BuildTools.exe", "$(Get-Location)\vs_buildtools.exe")
+.\vs_buildtools.exe --quiet --add Microsoft.Components.MSBuild --add Microsoft.Net.Component.4.8.TargetingPack
 
-git clone "https://github.com/VISUS-Health-IT-GmbH/MSWordEmulator.git" mswordemu
-$path = "$(Get-Location)/mswordemu/Word/Word.vbproj"
+<# download Git and install it #>
+$client.DownloadFile("https://github.com/git-for-windows/git/releases/download/v2.34.1.windows.1/Git-2.34.1-64-bit.exe", "$(Get-Location)\git.exe")
+.\git.exe /VERYSILENT
 
-cd "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin"
-.\MSBuild.exe $path
+<# wait for installation to be done and reload path #>
+Start-Sleep -Seconds 30
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+
+<# clone repository and save path for MSBuild #>
+git clone "https://github.com/VISUS-Health-IT-GmbH/MSWordEmulator.git" repo
+$path = "$(Get-Location)/repo/Word.sln"
+
+<# install Word.dll using MSBuild #>
+cd "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin"
+.\MSBuild.exe $path /p:Platform=x64 /p:Configuration=Release
 ```
 
 
@@ -44,10 +56,6 @@ cd "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin"
 After installation you can run the following PowerShell commands to veryfy everything works
 correctly:
 ```powershell
-$word = New-Object -ComObject word.application
-$word.visible = $False
-
-$doc = $word.documents.open("test.doc")
-$doc.saveas("test.pdf", 17)
-$doc.close()
+New-Object -ComObject word.application
+New-Object -ComObject word.document
 ```

@@ -54,6 +54,24 @@ Public Class Document
             fs.Read(buffer, 0, buffer.Length)
         End Using
 
+        Dim sequences As New List(Of Byte())()
+        sequences.Add(New Byte() {&HD0, &HCF, &H11, &HE0, &HA1, &HB1, &H1A, &HE1})
+        sequences.Add(New Byte() {&H50, &H4B, &H3, &H4})
+        sequences.Add(New Byte() {&H50, &H4B, &H5, &H6})
+        sequences.Add(New Byte() {&H50, &H4B, &H7, &H8})
+
+        Do
+            For Each sequence As Byte() In sequences
+                For i = 0 To UBound(sequence)
+                    If sequence(i) <> buffer(i) Then
+                        Dim message As String = "'word.documents.open' -> File '" + input + "' is no DOC / DOCX, see magic number: " + String.Join("", buffer)
+                        Console.WriteLine(message)
+                        Exit Do
+                    End If
+                Next
+            Next
+        Loop While False
+
         Dim docObj As New Document()
         Return docObj
     End Function
