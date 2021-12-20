@@ -1,5 +1,7 @@
 # MSWordEmulator
 
+![example workflow](https://github.com/VISUS-Health-IT-GmbH/MSWordEmulator/actions/workflows/msbuild.yml/badge.svg)
+
 A simple Windows driver to emulate a subset of COM objects provided by a Microsoft Word installation
 to be used in PowerShell using black magic.
 

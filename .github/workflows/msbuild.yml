@@ -20,3 +20,9 @@ jobs:
 
       - name: Runs MSBuild on Word/Word.vbproj
         run: msbuild Word\Word.vbproj -property:Configuration=Release -property:Platform=x64
+
+      - name: Check if COM objects exists
+        shell: pwsh
+        run: |
+          New-Object -ComObject Word.Application
+          New-Object -ComObject Word.Document
