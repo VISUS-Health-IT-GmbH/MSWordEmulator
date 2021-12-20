@@ -1,0 +1,22 @@
+# Runs MSBuild to build Word.dll
+name: MSBuild
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Runs MSBuild on Word/Word.vbproj
+        run: msbuild Word\Word.vbproj -property:Configuration=Release -property:Platform=x64
