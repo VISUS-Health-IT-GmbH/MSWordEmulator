@@ -38,10 +38,10 @@ Public Class Document
             Return Nothing
         ElseIf Directory.Exists(input) Then
             ' 2) input directory throw COMException
-            Throw New COMException
+            Throw New COMException("[word.document.open - EXCEPTION] File '" + input + "' is a directory!")
         ElseIf Not File.Exists(input) Then
             ' 3) input not a file throw COMException
-            Throw New COMException
+            Throw New COMException("[word.document.open - EXCEPTION] File '" + input + "' does not exist!")
         End If
 
         ' Check if file is DOC / DOCX file by magic number
@@ -91,10 +91,10 @@ Public Class Document
         ' Check input for correctness
         If output Is Nothing Then
             ' 1) input NULL throw COMException
-            Throw New COMException
+            Throw New COMException("[word.document.saveas - EXCEPTION] Parameter 'output' is Nothing!")
         ElseIf Directory.Exists(output) Then
             ' 2) input directory throw COMException
-            Throw New COMException
+            Throw New COMException("[word.document.saveas - EXCEPTION] File '" + output + "' is a directory!")
         ElseIf File.Exists(output) Then
             ' 3) input an existing file throw COMException
             Dim input_buffer() As Byte = New Byte(4) {}
@@ -103,7 +103,7 @@ Public Class Document
             End Using
 
             If Not CheckMagicNumbers(buffer, input_buffer) Then
-                Throw New COMException
+                Throw New COMException("[word.document.saveas - EXCEPTION] File '" + output + "' exists but is no PDF file!")
             Else
                 Console.WriteLine(
                     "[word.document.saveas - WARNING] File '" + output +
