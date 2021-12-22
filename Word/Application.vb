@@ -21,12 +21,12 @@ Public Class Application
 
     ' (Necessary) public information subroutine
     Public Sub Information()
-        Console.WriteLine("Emulation of 'word.application' COM object!")
+        Console.WriteLine("[word.application.information] Emulation of 'word.application' COM object!")
     End Sub
 
 
     ' Variables to be emulated
     ' ========================
-    Public visible As Boolean = False
-    Public documents As New Document
+    Public Visible As Boolean = False
+    Public Documents As New Document
 End Class

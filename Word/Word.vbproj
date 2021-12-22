@@ -95,6 +95,7 @@
     <Import Include="System.IO" />
     <Import Include="System.Linq" />
     <Import Include="System.Runtime.InteropServices" />
+    <Import Include="System.Text" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
