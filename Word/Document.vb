@@ -124,7 +124,7 @@ Public Class Document
 
         If SaveChanges = WdSaveOptions.wdDoNotSaveChanges Then
             Console.WriteLine(
-                "[word.document.close - INFO] Changes in DOCX / DOC won't be saved. Not " 
+                "[word.document.close - INFO] Changes in DOCX / DOC won't be saved. Not " +
                 "possible anyway in emulation."
             )
         ElseIf SaveChanges = WdSaveOptions.wdPromptToSaveChanges Then
