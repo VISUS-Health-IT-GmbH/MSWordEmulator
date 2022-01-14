@@ -119,7 +119,7 @@ Public Class Document
 
     ' Emulation of "word.documents.close" subroutine
     ' TODO: Add other optional parameters as well
-    Public Sub Close(Optional ByVal SaveChanges As Variant = WdSaveOptions.wdDoNotSaveChanges)
+    Public Sub Close(Optional ByVal SaveChanges As Object = WdSaveOptions.wdDoNotSaveChanges)
         Console.WriteLine("[word.document.close] Emulated subroutine!")
 
         If SaveChanges = WdSaveOptions.wdDoNotSaveChanges Then
@@ -143,7 +143,7 @@ Public Class Document
 
     ' Enumeration used in "Close" subroutine
     ' ======================================
-    Public Enum WdSaveOptions As Variant
+    Public Enum WdSaveOptions As Object
         wdDoNotSaveChanges = 0      ' dont save changes automatically
         wdPromptToSaveChanges = -2  ' prompt user to save changes automatically
         wdSaveChanges = -1          ' save changes automatically
