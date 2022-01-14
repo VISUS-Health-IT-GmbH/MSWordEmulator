@@ -79,7 +79,6 @@ Public Class Document
 
 
     ' Emulation of "word.documents.saveas" subroutine
-    ' TODO: Check if output is a PDF file and overwrite if true!
 #Disable Warning IDE0060 ' Possible unused parameters
     Public Sub SaveAs(ByVal output As String, ByVal type As Integer)
         Console.WriteLine("[word.document.saveas] Emulated subroutine!")
@@ -119,9 +118,36 @@ Public Class Document
 
 
     ' Emulation of "word.documents.close" subroutine
-    Public Sub Close()
+    ' TODO: Add other optional parameters as well
+    Public Sub Close(Optional ByVal SaveChanges As Variant = WdSaveOptions.wdDoNotSaveChanges)
         Console.WriteLine("[word.document.close] Emulated subroutine!")
+
+        If SaveChanges = WdSaveOptions.wdDoNotSaveChanges Then
+            Console.WriteLine(
+                "[word.document.close - INFO] Changes in DOCX / DOC won't be saved. Not " 
+                "possible anyway in emulation."
+            )
+        ElseIf SaveChanges = WdSaveOptions.wdPromptToSaveChanges Then
+            Console.WriteLine(
+                "[word.document.close - INFO] Changes in DOCX / DOC will prompt user to save " +
+                "changes. Not possible in emulation."
+            )
+        Else
+            Console.WriteLine(
+                "[word.document.close - INFO] Changes in DOCX / DOC will be saved. Not possible " +
+                "in emulation."
+            )
+        End If
     End Sub
+
+
+    ' Enumeration used in "Close" subroutine
+    ' ======================================
+    Public Enum WdSaveOptions As Variant
+        wdDoNotSaveChanges = 0      ' dont save changes automatically
+        wdPromptToSaveChanges = -2  ' prompt user to save changes automatically
+        wdSaveChanges = -1          ' save changes automatically
+    End Enum
 
 
     ' Helper functions used in emulation
