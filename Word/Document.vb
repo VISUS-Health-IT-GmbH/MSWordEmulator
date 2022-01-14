@@ -143,7 +143,7 @@ Public Class Document
 
     ' Enumeration used in "Close" subroutine
     ' ======================================
-    Public Enum WdSaveOptions As Object
+    Public Enum WdSaveOptions As Integer
         wdDoNotSaveChanges = 0      ' dont save changes automatically
         wdPromptToSaveChanges = -2  ' prompt user to save changes automatically
         wdSaveChanges = -1          ' save changes automatically
