@@ -21,7 +21,9 @@ Public Class Application
 
     ' (Necessary) public information subroutine
     Public Sub Information()
-        Console.WriteLine("[word.application.information] Emulation of 'word.application' COM object!")
+        Console.WriteLine(
+            "[word.application.information] Emulation of 'word.application' COM object!"
+        )
     End Sub
 
 
